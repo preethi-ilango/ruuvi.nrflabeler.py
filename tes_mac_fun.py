@@ -5,4 +5,4 @@ import main
 
 
 def check():
- assert (main.ficr2mac!=None)
+ assert (main.ficr2mac()!=None)
