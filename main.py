@@ -41,7 +41,7 @@ api.open()
 
 #sample test case 
 def test_func_fast():
- pass
+ assert True
 
 
 
