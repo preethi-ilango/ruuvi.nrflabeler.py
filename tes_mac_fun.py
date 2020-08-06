@@ -1,4 +1,4 @@
-import pytest
+import main
 
 
 def check_mac():
