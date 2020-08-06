@@ -1,5 +1,8 @@
 import main
 
 
-def check_mac():
+  
+
+
+def check():
  assert (main.ficr2mac!=None)
