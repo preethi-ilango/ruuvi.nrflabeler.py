@@ -1,5 +1,5 @@
 import main
-import mock
+
 import pytest
 
 FICR_BASE = 0x10000000
