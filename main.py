@@ -41,10 +41,10 @@ api.open()
 # Find connected probes
 probes = api.get_connected_probes()
 
-try:
- if len(probes) != 1:
-   print("Error, expected 1 nRF device to be connected, found: " + str(len(probes)))
-   return False
+
+if len(probes) != 1:
+  print("Error, expected 1 nRF device to be connected, found: " + str(len(probes)))
+  return False
    
  
 snr = probes[0]
