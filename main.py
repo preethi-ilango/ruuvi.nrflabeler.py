@@ -41,10 +41,10 @@ api.open()
 # Find connected probes
 probes = api.get_connected_probes()
 
-try
+try:
 if len(probes) != 1:
   print("Error, expected 1 nRF device to be connected, found: " + str(len(probes)))
-  assert(False)  
+  assert False  
  
 snr = probes[0]
 # To program J-Link probe at snr <snr>:
