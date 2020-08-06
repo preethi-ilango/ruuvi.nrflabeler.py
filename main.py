@@ -2,6 +2,7 @@ import subprocess as proc
 import sys
 import os
 import requests
+import pytest
 
 from pynrfjprog import HighLevel
 
@@ -37,6 +38,13 @@ def mac2str(mac):
 
 api = HighLevel.API()
 api.open()
+
+#sample test case 
+ def test_func_fast():
+  pass
+
+
+
 
 # Find connected probes
 probes = api.get_connected_probes()
