@@ -47,14 +47,17 @@ api.open()
 # Find connected probes
 probes = api.get_connected_probes()
 
-
-if len(probes) != 1:
-  print("Error, expected 1 nRF device to be connected, found: " + str(len(probes)))
-  sys.exit(1)
+def check():
+  
+ if len(probes) != 1:
+   print("Error, expected 1 nRF device to be connected, found: " + str(len(probes)))
+   sys.exit(1)
+  
    
 
 snr = probes[0]
 # To program J-Link probe at snr <snr>:
+check()
 probe = HighLevel.DebugProbe(api, snr)
 # Read MAC Address
 addr0 = probe.read(FICR_BASE + DEVICEADDR0)
