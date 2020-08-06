@@ -64,7 +64,6 @@ def check():
  print('DeviceAddr: ', mac_str)
 
 
-def print_label():
  parser = argparse.ArgumentParser("Flash and print label for NRF52 device")
  parser.add_argument('--text', type=str, help="Text")
  parser.add_argument('--print', type=str, help="Print label from template file. 'xx:xx:xx:xx:xx:xx' is replaced with MAC address and 'SENSOR' is replaced with text argument" )
@@ -93,8 +92,6 @@ def print_label():
    x = requests.post(url, data = labelData, verify = False)
 
    print(x.text)
-
-def program():
   
   # Program device
   if args.fw:
