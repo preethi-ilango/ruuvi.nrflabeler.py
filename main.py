@@ -94,13 +94,13 @@ def check():
    print(x.text)
   
   # Program device
-  if args.fw:
-    print("Flashing nRF52 device")
-    probe.erase(HighLevel.EraseAction.ERASE_ALL)
-    probe.program(args.fw)
-    print("Verifying nRF52 device")
-    probe.verify(args.fw)
-    print("Done.")
-    probe.reset(HighLevel.ResetAction.RESET_PIN)
-  api.close()
+ if args.fw:
+   print("Flashing nRF52 device")
+   probe.erase(HighLevel.EraseAction.ERASE_ALL)
+   probe.program(args.fw)
+   print("Verifying nRF52 device")
+   probe.verify(args.fw)
+   print("Done.")
+   probe.reset(HighLevel.ResetAction.RESET_PIN)
+ api.close()
 
