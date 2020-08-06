@@ -12,5 +12,5 @@ def test_check():
 
 def test_call_quit_ends_the_game():                                       
     """Tests call_quit and confirming ends the session."""                                 
-    pytest_wrapped_exit = pytest.raises(SystemExit)                   
-    assert main.check() == pytest_wrapped_exit.type 
+ pytest_wrapped_exit = pytest.raises(SystemExit)                   
+ assert main.check() == pytest_wrapped_exit.type 
