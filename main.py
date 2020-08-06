@@ -61,46 +61,55 @@ snr = probes[0]
 # To program J-Link probe at snr <snr>:
 argu_check()
 check()
-probe = HighLevel.DebugProbe(api, snr)
-# Read MAC Address
-addr0 = probe.read(FICR_BASE + DEVICEADDR0)
-addr1 = probe.read(FICR_BASE + DEVICEADDR1)
-mac = ficr2mac(addr0, addr1)
-mac_str = mac2str(mac)
-print('DeviceAddr: ', mac_str)
 
-if args.print:
-  labelXml = ""
-  with open(args.print, 'r') as myfile:
-    labelXml = myfile.read()
+def probe():
+  
 
-  labelXml = labelXml.replace("xx:xx:xx:xx:xx:xx", mac_str)
+  probe = HighLevel.DebugProbe(api, snr)
+  # Read MAC Address
+  addr0 = probe.read(FICR_BASE + DEVICEADDR0)
+  addr1 = probe.read(FICR_BASE + DEVICEADDR1)
+  mac = ficr2mac(addr0, addr1)
+  mac_str = mac2str(mac)
+  print('DeviceAddr: ', mac_str)
 
-  if args.text:
-    labelXml = labelXml.replace("SENSOR", args.text)
-  else:
-    labelXml = labelXml.replace("SENSOR", "")
 
-  print(labelXml)
+def print_label():
+  
+  if args.print:
+    labelXml = ""
+    with open(args.print, 'r') as myfile:
+      labelXml = myfile.read()
 
-  url = "https://127.0.0.1:41951/DYMO/DLS/Printing/PrintLabel"
-  labelData = {
-    "printerName": "DYMO LabelWriter 450",
-    "labelXml": labelXml,
-    "labelSetXml": ""
-  }
-  x = requests.post(url, data = labelData, verify = False)
+    labelXml = labelXml.replace("xx:xx:xx:xx:xx:xx", mac_str)
 
-  print(x.text)
+    if args.text:
+      labelXml = labelXml.replace("SENSOR", args.text)
+    else:
+      labelXml = labelXml.replace("SENSOR", "")
 
-# Program device
-if args.fw:
-  print("Flashing nRF52 device")
-  probe.erase(HighLevel.EraseAction.ERASE_ALL)
-  probe.program(args.fw)
-  print("Verifying nRF52 device")
-  probe.verify(args.fw)
-  print("Done.")
-  probe.reset(HighLevel.ResetAction.RESET_PIN)
-api.close()
+    print(labelXml)
+
+    url = "https://127.0.0.1:41951/DYMO/DLS/Printing/PrintLabel"
+    labelData = {
+      "printerName": "DYMO LabelWriter 450",
+      "labelXml": labelXml,
+      "labelSetXml": ""
+    }
+    x = requests.post(url, data = labelData, verify = False)
+
+    print(x.text)
+
+def program():
+  
+  # Program device
+  if args.fw:
+    print("Flashing nRF52 device")
+    probe.erase(HighLevel.EraseAction.ERASE_ALL)
+    probe.program(args.fw)
+    print("Verifying nRF52 device")
+    probe.verify(args.fw)
+    print("Done.")
+    probe.reset(HighLevel.ResetAction.RESET_PIN)
+  api.close()
 
