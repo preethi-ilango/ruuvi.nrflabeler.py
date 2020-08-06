@@ -79,29 +79,29 @@ def print_label():
   
  args = parser.parse_args()
   
-  if args.print:
-    labelXml = ""
-    with open(args.print, 'r') as myfile:
-      labelXml = myfile.read()
+if args.print:
+  labelXml = ""
+  with open(args.print, 'r') as myfile:
+    labelXml = myfile.read()
 
-    labelXml = labelXml.replace("xx:xx:xx:xx:xx:xx", mac_str)
+  labelXml = labelXml.replace("xx:xx:xx:xx:xx:xx", mac_str)
 
-    if args.text:
-      labelXml = labelXml.replace("SENSOR", args.text)
-    else:
-      labelXml = labelXml.replace("SENSOR", "")
+  if args.text:
+    labelXml = labelXml.replace("SENSOR", args.text)
+  else:
+    labelXml = labelXml.replace("SENSOR", "")
 
-    print(labelXml)
+  print(labelXml)
 
-    url = "https://127.0.0.1:41951/DYMO/DLS/Printing/PrintLabel"
-    labelData = {
-      "printerName": "DYMO LabelWriter 450",
-      "labelXml": labelXml,
-      "labelSetXml": ""
-    }
-    x = requests.post(url, data = labelData, verify = False)
+  url = "https://127.0.0.1:41951/DYMO/DLS/Printing/PrintLabel"
+  labelData = {
+    "printerName": "DYMO LabelWriter 450",
+    "labelXml": labelXml,
+    "labelSetXml": ""
+  }
+  x = requests.post(url, data = labelData, verify = False)
 
-    print(x.text)
+  print(x.text)
 
 def program():
   
