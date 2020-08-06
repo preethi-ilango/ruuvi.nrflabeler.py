@@ -40,8 +40,8 @@ api = HighLevel.API()
 api.open()
 
 #sample test case 
- def test_func_fast():
-  pass
+def test_func_fast():
+ pass
 
 
 
