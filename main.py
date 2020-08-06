@@ -13,7 +13,9 @@ parser = argparse.ArgumentParser("Flash and print label for NRF52 device")
 parser.add_argument('--text', type=str, help="Text")
 parser.add_argument('--print', type=str, help="Print label from template file. 'xx:xx:xx:xx:xx:xx' is replaced with MAC address and 'SENSOR' is replaced with text argument" )
 parser.add_argument('--fw', type=str, help='Firmware to flash')
-args = parser.parse_args()
+def argu_check():
+  
+ args = parser.parse_args()
 
 FICR_BASE = 0x10000000
 DEVICEADDR0 = 0xA4
@@ -57,6 +59,7 @@ def check():
 
 snr = probes[0]
 # To program J-Link probe at snr <snr>:
+argu_check()
 check()
 probe = HighLevel.DebugProbe(api, snr)
 # Read MAC Address
