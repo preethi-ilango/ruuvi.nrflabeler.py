@@ -50,24 +50,18 @@ def check():
  if len(probes) != 1:
    print("Error, expected 1 nRF device to be connected, found: " + str(len(probes)))
    sys.exit(1)
-  
-   
 
-
-
-
-def probe():
-  snr = probes[0]
+ snr = probes[0]
 # To program J-Link probe at snr <snr>:
   
 
-  probe = HighLevel.DebugProbe(api, snr)
-  # Read MAC Address
-  addr0 = probe.read(FICR_BASE + DEVICEADDR0)
-  addr1 = probe.read(FICR_BASE + DEVICEADDR1)
-  mac = ficr2mac(addr0, addr1)
-  mac_str = mac2str(mac)
-  print('DeviceAddr: ', mac_str)
+ probe = HighLevel.DebugProbe(api, snr)
+ # Read MAC Address
+ addr0 = probe.read(FICR_BASE + DEVICEADDR0)
+ addr1 = probe.read(FICR_BASE + DEVICEADDR1)
+ mac = ficr2mac(addr0, addr1)
+ mac_str = mac2str(mac)
+ print('DeviceAddr: ', mac_str)
 
 
 def print_label():
@@ -75,33 +69,30 @@ def print_label():
  parser.add_argument('--text', type=str, help="Text")
  parser.add_argument('--print', type=str, help="Print label from template file. 'xx:xx:xx:xx:xx:xx' is replaced with MAC address and 'SENSOR' is replaced with text argument" )
  parser.add_argument('--fw', type=str, help='Firmware to flash')
+ args = parser.parse_args()  
+ if args.print:
+   labelXml = ""
+   with open(args.print, 'r') as myfile:
+     labelXml = myfile.read()
 
-  
- args = parser.parse_args()
-  
-if args.print:
-  labelXml = ""
-  with open(args.print, 'r') as myfile:
-    labelXml = myfile.read()
+   labelXml = labelXml.replace("xx:xx:xx:xx:xx:xx", mac_str)
 
-  labelXml = labelXml.replace("xx:xx:xx:xx:xx:xx", mac_str)
+   if args.text:
+     labelXml = labelXml.replace("SENSOR", args.text)
+   else:
+     labelXml = labelXml.replace("SENSOR", "")
 
-  if args.text:
-    labelXml = labelXml.replace("SENSOR", args.text)
-  else:
-    labelXml = labelXml.replace("SENSOR", "")
+   print(labelXml)
 
-  print(labelXml)
+   url = "https://127.0.0.1:41951/DYMO/DLS/Printing/PrintLabel"
+   labelData = {
+     "printerName": "DYMO LabelWriter 450",
+     "labelXml": labelXml,
+     "labelSetXml": ""
+   }
+   x = requests.post(url, data = labelData, verify = False)
 
-  url = "https://127.0.0.1:41951/DYMO/DLS/Printing/PrintLabel"
-  labelData = {
-    "printerName": "DYMO LabelWriter 450",
-    "labelXml": labelXml,
-    "labelSetXml": ""
-  }
-  x = requests.post(url, data = labelData, verify = False)
-
-  print(x.text)
+   print(x.text)
 
 def program():
   
