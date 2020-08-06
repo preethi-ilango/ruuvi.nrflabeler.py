@@ -39,9 +39,7 @@ def mac2str(mac):
 api = HighLevel.API()
 api.open()
 
-#sample test case 
-def test_func_fast():
- assert True
+
 
 
 
